@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yuvraj Singh Jadaun — Developer Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #050510;
+    --bg2: #0a0a1a;
+    --accent1: #7c6bff;
+    --accent2: #00e5ff;
+    --accent3: #ff6bff;
+    --glass: rgba(255,255,255,0.04);
+    --glass-border: rgba(255,255,255,0.08);
+    --text: #f0f0ff;
+    --muted: rgba(255,255,255,0.45);
+    --font-head: 'Syne', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-head);
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom cursor */
+  #cursor {
+    width: 12px; height: 12px;
+    background: var(--accent2);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.15s ease;
+    mix-blend-mode: screen;
+  }
+  #cursor-ring {
+    width: 36px; height: 36px;
+    border: 1px solid rgba(0,229,255,0.4);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9998;
+    transition: transform 0.4s ease, width 0.3s, height 0.3s, opacity 0.3s;
+  }
+
+  /* Noise texture */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 1; opacity: 0.4;
+  }
+
+  /* Animated background orbs */
+  .orb {
+    position: fixed; border-radius: 50%;
+    filter: blur(100px); pointer-events: none; z-index: 0;
+  }
+  .orb1 { width: 600px; height: 600px; background: radial-gradient(circle, rgba(124,107,255,0.15), transparent 70%); top: -200px; left: -200px; animation: orb1 20s ease-in-out infinite alternate; }
+  .orb2 { width: 500px; height: 500px; background: radial-gradient(circle, rgba(0,229,255,0.1), transparent 70%); bottom: 0; right: -100px; animation: orb2 18s ease-in-out infinite alternate; }
+  .orb3 { width: 400px; height: 400px; background: radial-gradient(circle, rgba(255,107,255,0.08), transparent 70%); top: 50%; left: 50%; animation: orb3 25s ease-in-out infinite alternate; }
+
+  @keyframes orb1 { to { transform: translate(150px, 200px); } }
+  @keyframes orb2 { to { transform: translate(-150px, -150px); } }
+  @keyframes orb3 { to { transform: translate(-200px, 100px); } }
+
+  /* Navigation */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 20px 60px;
+    display: flex; justify-content: space-between; align-items: center;
+    background: rgba(5,5,16,0.6);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--glass-border);
+  }
+  .nav-logo {
+    font-size: 18px; font-weight: 800;
+    background: linear-gradient(135deg, var(--accent1), var(--accent2));
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    letter-spacing: -0.5px;
+  }
+  .nav-links { display: flex; gap: 36px; }
+  .nav-links a {
+    text-decoration: none; color: var(--muted);
+    font-size: 13px; font-weight: 500; letter-spacing: 1.5px;
+    text-transform: uppercase; font-family: var(--font-mono);
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--accent2); }
+
+  /* Hero */
+  #hero {
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    padding: 120px 40px 80px;
+    position: relative; z-index: 2;
+  }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--glass); border: 1px solid var(--glass-border);
+    padding: 8px 20px; border-radius: 100px;
+    font-size: 12px; font-family: var(--font-mono); color: var(--accent2);
+    margin-bottom: 40px;
+    animation: fadeDown 0.8s ease both;
+  }
+  .hero-badge span { width: 6px; height: 6px; background: var(--accent2); border-radius: 50%; animation: pulse 2s infinite; }
+
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+  h1.hero-name {
+    font-size: clamp(52px, 8vw, 96px);
+    font-weight: 800; line-height: 1;
+    letter-spacing: -3px;
+    margin-bottom: 16px;
+    animation: fadeUp 0.9s ease 0.1s both;
+  }
+
+  .name-gradient {
+    background: linear-gradient(135deg, #fff 0%, var(--accent1) 40%, var(--accent2) 70%, var(--accent3) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+
+  .hero-title {
+    font-size: clamp(16px, 2.5vw, 22px);
+    color: var(--muted); font-weight: 400;
+    margin-bottom: 32px;
+    font-family: var(--font-mono);
+    animation: fadeUp 0.9s ease 0.2s both;
+  }
+
+  .hero-title .highlight {
+    color: var(--accent2);
+    -webkit-text-fill-color: var(--accent2);
+  }
+
+  .hero-description {
+    max-width: 600px; font-size: 16px;
+    color: var(--muted); line-height: 1.8;
+    margin-bottom: 48px;
+    animation: fadeUp 0.9s ease 0.3s both;
+  }
+
+  .hero-ctas {
+    display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;
+    animation: fadeUp 0.9s ease 0.4s both;
+  }
+
+  .btn-primary {
+    padding: 14px 36px; border-radius: 100px;
+    background: linear-gradient(135deg, var(--accent1), var(--accent2));
+    color: #fff; font-size: 14px; font-weight: 600;
+    text-decoration: none; letter-spacing: 0.5px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 0 40px rgba(124,107,255,0.3);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 60px rgba(124,107,255,0.5); }
+
+  .btn-secondary {
+    padding: 14px 36px; border-radius: 100px;
+    background: var(--glass); border: 1px solid var(--glass-border);
+    color: var(--text); font-size: 14px; font-weight: 500;
+    text-decoration: none; letter-spacing: 0.5px;
+    backdrop-filter: blur(10px);
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .btn-secondary:hover { transform: translateY(-2px); border-color: var(--accent2); }
+
+  /* Floating tech badges in hero */
+  .floating-badges {
+    margin-top: 72px; display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;
+    animation: fadeUp 0.9s ease 0.5s both;
+  }
+  .tech-badge {
+    padding: 6px 16px;
+    background: var(--glass); border: 1px solid var(--glass-border);
+    border-radius: 100px; font-size: 12px; font-family: var(--font-mono);
+    color: var(--muted);
+    animation: float var(--dur, 4s) ease-in-out infinite alternate;
+  }
+  @keyframes float { to { transform: translateY(-6px); } }
+
+  /* Sections */
+  section { position: relative; z-index: 2; padding: 100px 60px; max-width: 1200px; margin: 0 auto; }
+
+  .section-label {
+    font-family: var(--font-mono); font-size: 12px; color: var(--accent2);
+    letter-spacing: 3px; text-transform: uppercase;
+    margin-bottom: 16px; display: flex; align-items: center; gap: 12px;
+  }
+  .section-label::after { content: ''; flex: 1; max-width: 60px; height: 1px; background: var(--accent2); opacity: 0.4; }
+
+  .section-title {
+    font-size: clamp(32px, 4vw, 52px); font-weight: 800;
+    letter-spacing: -2px; margin-bottom: 60px;
+    line-height: 1.1;
+  }
+
+  /* Glass cards */
+  .glass-card {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    backdrop-filter: blur(20px);
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  .glass-card:hover {
+    transform: translateY(-6px) scale(1.01);
+    border-color: rgba(124,107,255,0.3);
+    box-shadow: 0 20px 60px rgba(124,107,255,0.15);
+  }
+
+  /* Projects */
+  .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; }
+
+  .project-card {
+    padding: 32px;
+    position: relative; overflow: hidden;
+  }
+  .project-card::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(124,107,255,0.05), transparent);
+    pointer-events: none;
+  }
+  .project-number {
+    font-size: 64px; font-weight: 800; color: rgba(255,255,255,0.04);
+    position: absolute; top: 16px; right: 24px;
+    font-family: var(--font-mono); line-height: 1;
+  }
+  .project-icon {
+    width: 48px; height: 48px; border-radius: 12px;
+    background: linear-gradient(135deg, var(--accent1), var(--accent2));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; margin-bottom: 20px;
+  }
+  .project-name { font-size: 20px; font-weight: 700; margin-bottom: 10px; }
+  .project-desc { font-size: 14px; color: var(--muted); line-height: 1.7; margin-bottom: 24px; }
+  .project-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; }
+  .tag {
+    padding: 4px 12px; border-radius: 100px;
+    font-size: 11px; font-family: var(--font-mono);
+    background: rgba(124,107,255,0.15); border: 1px solid rgba(124,107,255,0.25);
+    color: var(--accent1);
+  }
+  .tag.cyan { background: rgba(0,229,255,0.1); border-color: rgba(0,229,255,0.2); color: var(--accent2); }
+  .tag.pink { background: rgba(255,107,255,0.1); border-color: rgba(255,107,255,0.2); color: var(--accent3); }
+  .project-links { display: flex; gap: 12px; }
+  .project-link {
+    font-size: 12px; font-family: var(--font-mono); color: var(--muted);
+    text-decoration: none; display: flex; align-items: center; gap: 6px;
+    transition: color 0.2s;
+  }
+  .project-link:hover { color: var(--accent2); }
+
+  /* Skills */
+  .skills-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+
+  .skill-group { padding: 32px; }
+  .skill-group-title {
+    font-size: 13px; font-family: var(--font-mono); color: var(--accent2);
+    letter-spacing: 2px; text-transform: uppercase; margin-bottom: 24px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .skill-item {
+    margin-bottom: 20px;
+  }
+  .skill-name-row { display: flex; justify-content: space-between; margin-bottom: 8px; }
+  .skill-name { font-size: 14px; font-weight: 500; }
+  .skill-level { font-size: 12px; font-family: var(--font-mono); color: var(--muted); }
+  .skill-bar { height: 3px; background: rgba(255,255,255,0.08); border-radius: 100px; overflow: hidden; }
+  .skill-fill {
+    height: 100%; border-radius: 100px;
+    background: linear-gradient(90deg, var(--accent1), var(--accent2));
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .skill-fill.animated { transform: scaleX(1); }
+
+  /* About */
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+  .about-text p { font-size: 16px; color: var(--muted); line-height: 1.9; margin-bottom: 20px; }
+  .about-text .em { color: var(--text); font-weight: 500; }
+
+  .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .stat-card { padding: 28px; text-align: center; }
+  .stat-num { font-size: 42px; font-weight: 800; background: linear-gradient(135deg, var(--accent1), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .stat-label { font-size: 12px; color: var(--muted); font-family: var(--font-mono); letter-spacing: 1px; margin-top: 4px; }
+
+  /* Contact */
+  .contact-inner {
+    text-align: center; padding: 80px 40px;
+    background: var(--glass); border: 1px solid var(--glass-border);
+    border-radius: 30px; backdrop-filter: blur(20px);
+    position: relative; overflow: hidden;
+  }
+  .contact-inner::before {
+    content: '';
+    position: absolute; inset: -2px;
+    background: linear-gradient(135deg, var(--accent1), var(--accent2), var(--accent3));
+    border-radius: 30px; z-index: -1; opacity: 0.3;
+  }
+  .contact-title { font-size: clamp(28px, 4vw, 48px); font-weight: 800; margin-bottom: 16px; }
+  .contact-sub { font-size: 16px; color: var(--muted); margin-bottom: 40px; }
+  .contact-links { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .contact-link {
+    padding: 12px 28px; border-radius: 100px;
+    background: var(--glass); border: 1px solid var(--glass-border);
+    color: var(--text); font-size: 14px; font-family: var(--font-mono);
+    text-decoration: none;
+    transition: transform 0.2s, background 0.2s;
+  }
+  .contact-link:hover { transform: translateY(-2px); background: rgba(124,107,255,0.2); }
+
+  /* Footer */
+  footer {
+    position: relative; z-index: 2;
+    text-align: center; padding: 40px;
+    font-size: 13px; font-family: var(--font-mono);
+    color: rgba(255,255,255,0.2);
+    border-top: 1px solid var(--glass-border);
+  }
+
+  /* Scroll reveal */
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* Animations */
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--accent1); border-radius: 2px; }
+
+  @media (max-width: 768px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    section { padding: 80px 24px; }
+    .about-grid { grid-template-columns: 1fr; }
+    h1.hero-name { letter-spacing: -2px; }
+  }
+
+  /* 3D tilt effect */
+  .tilt { transform-style: preserve-3d; perspective: 1000px; }
+</style>
+</head>
+<body>
+
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+<div class="orb orb3"></div>
+
+<!-- Navigation -->
+<nav>
+  <div class="nav-logo">YSJ.dev</div>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#projects">Projects</a>
+    <a href="#skills">Skills</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section id="hero" style="max-width:100%; padding:0;">
+  <div style="position:relative;z-index:2;text-align:center;padding:140px 40px 80px;">
+    <div class="hero-badge">
+      <span></span> Available for internships & open source
+    </div>
+    <h1 class="hero-name">
+      <span class="name-gradient">Yuvraj Singh</span><br>Jadaun
+    </h1>
+    <p class="hero-title">
+      <span class="highlight">Full Stack </span> developer · <span class="highlight">Web3</span> Developer
+    </p>
+    <p class="hero-description">
+      2nd year CSE student at Arya College of Engineering. I build fast, scalable backends, contribute to open source, and explore the decentralized web.
+    </p>
+    <div class="hero-ctas">
+      <a href="#projects" class="btn-primary">View My Work</a>
+      <a href="#contact" class="btn-secondary">Get In Touch</a>
+    </div>
+    <div class="floating-badges">
+      <span class="tech-badge" style="--dur:3.5s">Node.js</span>
+      <span class="tech-badge" style="--dur:4.2s">Express</span>
+      <span class="tech-badge" style="--dur:3.8s">JavaScript</span>
+      <span class="tech-badge" style="--dur:5s">Web3</span>
+      <span class="tech-badge" style="--dur:4.5s">MongoDB</span>
+      <span class="tech-badge" style="--dur:3.2s">Open Source</span>
+      <span class="tech-badge" style="--dur:4.8s">Git</span>
+    </div>
+  </div>
+</section>
+
+<!-- About -->
+<section id="about">
+  <div class="section-label">About me</div>
+  <div class="section-title">Who I Am</div>
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <p>I'm <span class="em">Yuvraj Singh Jadaun</span>, a passionate developer currently pursuing my engineering degree at Arya College of Engineering, Jaipur. I'm in my 2nd year and already deeply invested in building real-world software.</p>
+      <p>My focus areas are <span class="em">backend development</span>, <span class="em">full-stack web apps</span>, and the exciting world of <span class="em">Web3 & blockchain</span>. I believe in learning by building — which is why I have hands-on projects from day one.</p>
+      <p>I actively contribute to <span class="em">open source</span> projects and love the collaborative spirit of the developer community. Always looking for the next interesting problem to solve.</p>
+    </div>
+    <div class="about-stats reveal">
+      <div class="stat-card glass-card">
+        <div class="stat-num">2nd</div>
+        <div class="stat-label">Year of Engineering</div>
+      </div>
+      <div class="stat-card glass-card">
+        <div class="stat-num">3+</div>
+        <div class="stat-label">Projects Built</div>
+      </div>
+      <div class="stat-card glass-card">
+        <div class="stat-num">∞</div>
+        <div class="stat-label">Open Source PRs</div>
+      </div>
+      <div class="stat-card glass-card">
+        <div class="stat-num">3</div>
+        <div class="stat-label">Tech Domains</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Projects -->
+<section id="projects">
+  <div class="section-label">My Work</div>
+  <div class="section-title">Featured Projects</div>
+  <div class="projects-grid">
+
+    <div class="glass-card project-card tilt reveal">
+      <div class="project-number">01</div>
+      <div class="project-icon">📋</div>
+      <div class="project-name">CLI Todo List</div>
+      <div class="project-desc">A feature-rich command-line task manager built from scratch. Supports creating, updating, deleting, and persisting tasks locally with a clean terminal interface.</div>
+      <div class="project-tags">
+        <span class="tag">Node.js</span>
+        <span class="tag cyan">CLI</span>
+        <span class="tag">File System</span>
+      </div>
+      <div class="project-links">
+        <a href="https://github.com/yuvrajsingjadaun" class="project-link" target="_blank">
+          <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          GitHub
+        </a>
+      </div>
+    </div>
+
+    <div class="glass-card project-card tilt reveal" style="transition-delay:0.1s">
+      <div class="project-number">02</div>
+      <div class="project-icon">🐦</div>
+      <div class="project-name">Flappy Bird — JS</div>
+      <div class="project-desc">A browser-based Flappy Bird clone built with vanilla JavaScript and Canvas API. Smooth physics, collision detection, score tracking, and responsive gameplay.</div>
+      <div class="project-tags">
+        <span class="tag cyan">JavaScript</span>
+        <span class="tag">Canvas API</span>
+        <span class="tag pink">Game Dev</span>
+      </div>
+      <div class="project-links">
+        <a href="https://github.com/yuvrajsingjadaun" class="project-link" target="_blank">
+          <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          GitHub
+        </a>
+      </div>
+    </div>
+
+    <div class="glass-card project-card tilt reveal" style="transition-delay:0.2s">
+      <div class="project-number">03</div>
+      <div class="project-icon">⛓️</div>
+      <div class="project-name">Web3 Exploration</div>
+      <div class="project-desc">Exploring decentralized applications, smart contracts, and blockchain integrations. Building the foundation for the next generation of the internet.</div>
+      <div class="project-tags">
+        <span class="tag pink">Web3</span>
+        <span class="tag cyan">Solidity</span>
+        <span class="tag">Blockchain</span>
+      </div>
+      <div class="project-links">
+        <a href="https://github.com/yuvrajsingjadaun" class="project-link" target="_blank">
+          <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          GitHub
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Skills -->
+<section id="skills">
+  <div class="section-label">Expertise</div>
+  <div class="section-title">Skills & Stack</div>
+  <div class="skills-container">
+
+    <div class="glass-card skill-group reveal">
+      <div class="skill-group-title">⚡ Backend</div>
+      <div class="skill-item">
+        <div class="skill-name-row"><span class="skill-name">Node.js + Express</span><span class="skill-level">Advanced</span></div>
+        <div class="skill-bar"><div class="skill-fill" style="width:85%"></div></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-name-row"><span class="skill-name">REST API Design</span><span class="skill-level">Advanced</span></div>
+        <div class="skill-bar"><div class="skill-fill" style="width:82%"></div></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-name-row"><span class="skill-name">MongoDB / SQL</span><span class="skill-level">Intermediate</span></div>
+        <div class="skill-bar"><div class="skill-fill" style="width:70%"></div></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-name-row"><span class="skill-name">Authentication / JWT</span><span class="skill-level">Intermediate</span></div>
+        <div class="skill-bar"><div class="skill-fill" style="width:68%"></div></div>
+      </div>
+    </div>
+
+    <div class="glass-card skill-group reveal" style="transition-delay:0.1s">
+      <div class="skill-group-title">🌐 Frontend & Web3</div>
+      <div class="skill-item">
+        <div class="skill-name-row"><span class="skill-name">JavaScript (ES6+)</span><span class="skill-level">Advanced</span></div>
+        <div class="skill-bar"><div class="skill-fill" style="width:88%"></div></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-name-row"><span class="skill-name">HTML / CSS</span><span class="skill-level">Advanced</span></div>
+        <div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-name-row"><span class="skill-name">Web3.js / Ethers.js</span><span class="skill-level">Learning</span></div>
+        <div class="skill-bar"><div class="skill-fill" style="width:50%"></div></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-name-row"><span class="skill-name">Solidity Basics</span><span class="skill-level">Learning</span></div>
+        <div class="skill-bar"><div class="skill-fill" style="width:40%"></div></div>
+      </div>
+    </div>
+
+    <div class="glass-card skill-group reveal" style="transition-delay:0.2s">
+      <div class="skill-group-title">🛠️ Tools & DevOps</div>
+      <div class="skill-item">
+        <div class="skill-name-row"><span class="skill-name">Git & GitHub</span><span class="skill-level">Advanced</span></div>
+        <div class="skill-bar"><div class="skill-fill" style="width:85%"></div></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-name-row"><span class="skill-name">Linux / Terminal</span><span class="skill-level">Intermediate</span></div>
+        <div class="skill-bar"><div class="skill-fill" style="width:72%"></div></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-name-row"><span class="skill-name">Open Source Contribution</span><span class="skill-level">Active</span></div>
+        <div class="skill-bar"><div class="skill-fill" style="width:75%"></div></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-name-row"><span class="skill-name">Docker Basics</span><span class="skill-level">Learning</span></div>
+        <div class="skill-bar"><div class="skill-fill" style="width:45%"></div></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Contact -->
+<section id="contact">
+  <div class="contact-inner reveal">
+    <div class="section-label" style="justify-content:center">Let's connect</div>
+    <div class="contact-title">Open to <span style="background:linear-gradient(135deg,var(--accent1),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent">Opportunities</span></div>
+    <p class="contact-sub">Looking for internships, open source collaborations, and exciting projects. Let's build something great together.</p>
+    <div class="contact-links">
+      <a href="https://github.com/yuvrajsingjadaun" class="contact-link" target="_blank">
+        <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24" style="display:inline;vertical-align:middle;margin-right:6px"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        GitHub
+      </a>
+      <a href="mailto:yuvrajsinghjadaun0786@gmail.com" class="contact-link">✉ Email Me</a>
+      <a href="https://www.linkedin.com/in/yuvraj-singh-jadaun-a90424281/" class="contact-link" target="_blank">in LinkedIn</a>
+      <a href="#" class="contact-link">📄 Resume</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Designed & built by Yuvraj Singh Jadaun · Arya College of Engineering · 2026</p>
+</footer>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursor-ring');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; cursor.style.transform = `translate(${mx-6}px, ${my-6}px)`; });
+  function animateRing() { rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12; ring.style.transform = `translate(${rx-18}px, ${ry-18}px)`; requestAnimationFrame(animateRing); }
+  animateRing();
+  document.querySelectorAll('a, button, .glass-card').forEach(el => {
+    el.addEventListener('mouseenter', () => { ring.style.width='60px'; ring.style.height='60px'; ring.style.opacity='0.5'; });
+    el.addEventListener('mouseleave', () => { ring.style.width='36px'; ring.style.height='36px'; ring.style.opacity='1'; });
+  });
+
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(el => { if (el.isIntersecting) { el.target.classList.add('visible'); } });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el => observer.observe(el));
+
+  // Skill bar animation
+  const skillObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.querySelectorAll('.skill-fill').forEach(fill => fill.classList.add('animated'));
+      }
+    });
+  }, { threshold: 0.3 });
+  document.querySelectorAll('.skill-group').forEach(el => skillObserver.observe(el));
+
+  // 3D tilt on project cards
+  document.querySelectorAll('.tilt').forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width / 2;
+      const y = e.clientY - rect.top - rect.height / 2;
+      card.style.transform = `perspective(600px) rotateX(${-y/30}deg) rotateY(${x/30}deg) translateY(-6px) scale(1.01)`;
+    });
+    card.addEventListener('mouseleave', () => { card.style.transform = ''; });
+  });
+</script>
+</body>
+</html>
