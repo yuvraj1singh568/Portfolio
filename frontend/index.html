@@ -107,6 +107,14 @@
 
                 </button>
 
+                <button class="recruiter-toggle" type="button" aria-label="Open recruiter mode" title="Recruiter mode">
+
+                    <i class="fa-solid fa-briefcase"></i>
+
+                    <span>Recruiter</span>
+
+                </button>
+
                 <button class="menu-btn">
 
                     <i class="fa-solid fa-bars"></i>
@@ -243,11 +251,67 @@
 
                 <div class="profile-card">
 
-                    <img src="assets/profile.jpg"
+                    <img src="portfolio.jpeg"
 
                         alt="Yuvraj Singh Jadaun">
 
                 </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <section id="recruiterMode" class="recruiter-panel" aria-hidden="true">
+
+        <div class="recruiter-content">
+
+            <button class="recruiter-close" type="button" aria-label="Close recruiter mode">
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+            <span class="label">Recruiter Snapshot</span>
+
+            <h2>Full Stack & Blockchain Developer</h2>
+
+            <p class="recruiter-summary">Third-year developer focused on backend systems, practical web applications and learning decentralized technologies.</p>
+
+            <div class="recruiter-grid">
+
+                <div>
+
+                    <h3>Strongest Areas</h3>
+
+                    <p>Node.js, Express, MongoDB, JavaScript, REST APIs and problem solving.</p>
+
+                </div>
+
+                <div>
+
+                    <h3>Currently Building</h3>
+
+                    <p>AI paper analysis tools, browser games and Solidity-based DApps.</p>
+
+                </div>
+
+                <div>
+
+                    <h3>Open To</h3>
+
+                    <p>Software engineering internships, backend projects and remote collaboration.</p>
+
+                </div>
+
+            </div>
+
+            <div class="recruiter-actions">
+
+                <a href="mailto:yuvraj.cloudsec@gmail.com" class="btn-primary">Contact Me</a>
+
+                <a href="https://github.com/yuvraj1singh568" target="_blank" class="btn-secondary">View GitHub</a>
 
             </div>
 
@@ -363,6 +427,14 @@
 
                 </button>
 
+                <button class="recruiter-toggle" type="button" aria-label="Open recruiter mode" title="Recruiter mode">
+
+                    <i class="fa-solid fa-briefcase"></i>
+
+                    <span>Recruiter</span>
+
+                </button>
+
                 <button class="menu-btn">
 
                     <i class="fa-solid fa-bars"></i>
@@ -405,7 +477,7 @@
 
                 <div class="project-header">
 
-                    <h3>RTU AI Paper Analyzer</h3>
+                    <h3>AI Based paper analyzer</h3>
 
                     <span class="coming-soon">Upcoming</span>
 
@@ -430,6 +502,22 @@
                     <span>OpenAI API</span>
 
                 </div>
+
+                <details class="case-study">
+
+                    <summary>View Case Study</summary>
+
+                    <div class="case-study-content">
+
+                        <p><strong>Problem:</strong> Students need a faster way to identify repeated topics in large collections of RTU papers.</p>
+
+                        <p><strong>Approach:</strong> Build a backend that extracts paper content, organizes topics and uses AI to generate focused revision material.</p>
+
+                        <p><strong>Next milestone:</strong> Complete the paper ingestion pipeline and evaluate predictions against previous exams.</p>
+
+                    </div>
+
+                </details>
 
                 <div class="project-links">
 
@@ -475,6 +563,22 @@
                     <span>JavaScript</span>
 
                 </div>
+
+                <details class="case-study">
+
+                    <summary>View Case Study</summary>
+
+                    <div class="case-study-content">
+
+                        <p><strong>Problem:</strong> A task manager should remain useful without requiring a database or internet connection.</p>
+
+                        <p><strong>Approach:</strong> Designed a simple command interface around CRUD operations and reliable local file persistence.</p>
+
+                        <p><strong>Engineering lesson:</strong> Practiced input validation, filesystem handling and separating command logic from storage.</p>
+
+                    </div>
+
+                </details>
 
                 <div class="project-links">
 
@@ -523,6 +627,22 @@
                     <span>HTML</span>
 
                 </div>
+
+                <details class="case-study">
+
+                    <summary>View Case Study</summary>
+
+                    <div class="case-study-content">
+
+                        <p><strong>Problem:</strong> Create a responsive browser game with immediate feedback and consistent gameplay.</p>
+
+                        <p><strong>Approach:</strong> Used the Canvas API for rendering, a game loop for motion and collision detection for obstacles.</p>
+
+                        <p><strong>Engineering lesson:</strong> Balanced frame updates, scoring state and responsive input in a small client-side system.</p>
+
+                    </div>
+
+                </details>
 
                 <div class="project-links">
 
@@ -573,6 +693,22 @@
 
                 </div>
 
+                <details class="case-study">
+
+                    <summary>View Case Study</summary>
+
+                    <div class="case-study-content">
+
+                        <p><strong>Goal:</strong> Learn how decentralized applications connect a browser interface to smart contracts.</p>
+
+                        <p><strong>Approach:</strong> Explore Solidity contracts and wallet interactions through Ethers.js and Web3.js.</p>
+
+                        <p><strong>Next milestone:</strong> Ship one focused DApp with tests, transaction states and clear error handling.</p>
+
+                    </div>
+
+                </details>
+
                 <div class="project-links">
 
                     <a href="#">
@@ -588,6 +724,86 @@
                     </a>
 
                 </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ======================================== -->
+<!-- ARCHITECTURE -->
+<!-- ======================================== -->
+
+<section id="architecture" class="section architecture-section">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <span>Behind The Portfolio</span>
+
+            <h2>How a message becomes a real notification.</h2>
+
+            <p>A closer look at the full-stack contact workflow running behind this site.</p>
+
+        </div>
+
+        <div class="architecture-flow">
+
+            <details class="architecture-step" open>
+
+                <summary><span class="architecture-number">01</span><i class="fa-solid fa-display"></i><strong>Contact Form</strong></summary>
+
+                <p>The browser trims the input, checks required fields and validates the email before making a request.</p>
+
+            </details>
+
+            <details class="architecture-step">
+
+                <summary><span class="architecture-number">02</span><i class="fa-solid fa-cloud-arrow-up"></i><strong>API Request</strong></summary>
+
+                <p>The form sends a JSON <code>POST</code> request to <code>/api/contact</code> on the deployed Express server.</p>
+
+            </details>
+
+            <details class="architecture-step">
+
+                <summary><span class="architecture-number">03</span><i class="fa-solid fa-shield-halved"></i><strong>Validation</strong></summary>
+
+                <p>The controller checks that name, email, subject and message are present before continuing.</p>
+
+            </details>
+
+            <details class="architecture-step">
+
+                <summary><span class="architecture-number">04</span><i class="fa-solid fa-database"></i><strong>MongoDB</strong></summary>
+
+                <p>A Mongoose model stores the contact with trimming, length limits and automatic timestamps.</p>
+
+            </details>
+
+            <details class="architecture-step">
+
+                <summary><span class="architecture-number">05</span><i class="fa-solid fa-envelope-circle-check"></i><strong>Email Delivery</strong></summary>
+
+                <p>Resend sends the notification to the configured destination and reports failures back to the API.</p>
+
+            </details>
+
+        </div>
+
+        <div class="architecture-note">
+
+            <i class="fa-solid fa-code"></i>
+
+            <div>
+
+                <h3>Engineering decisions</h3>
+
+                <p>Validation happens in both the browser and backend. The database schema adds a second boundary with required fields, trimming and maximum lengths, while the API returns clear success and error responses.</p>
 
             </div>
 

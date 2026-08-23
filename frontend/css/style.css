@@ -610,7 +610,7 @@ height:360px;
 
 border-radius:50%;
 
-overflow:hidden;
+overflow:visible;
 
 background:#fff;
 
@@ -636,23 +636,15 @@ height:100%;
 
 object-fit:cover;
 
-}
+object-position:center;
 
-/* Floating Ring */
-
-.profile-card::after{
-
-content:"";
-
-position:absolute;
-
-inset:-18px;
-
-border:2px dashed rgba(0,0,0,.15);
+display:block;
 
 border-radius:50%;
 
-animation:rotateRing 18s linear infinite;
+position:relative;
+
+z-index:1;
 
 }
 
@@ -730,15 +722,6 @@ opacity:1;
 
 }
 
-@keyframes rotateRing{
-
-100%{
-
-transform:rotate(360deg);
-
-}
-
-}
 /* =======================================================
    ABOUT SECTION
 ======================================================= */
@@ -1501,6 +1484,271 @@ color:#fff;
 
 }
 
+.case-study{
+
+margin:0 0 28px;
+
+border-top:1px solid var(--border);
+
+border-bottom:1px solid var(--border);
+
+}
+
+.case-study summary{
+
+padding:15px 0;
+
+color:var(--black);
+
+font-size:14px;
+
+font-weight:700;
+
+cursor:pointer;
+
+list-style:none;
+
+}
+
+.case-study summary::-webkit-details-marker{
+
+display:none;
+
+}
+
+.case-study summary::after{
+
+content:"+";
+
+float:right;
+
+font-size:20px;
+
+font-weight:400;
+
+line-height:1;
+
+}
+
+.case-study[open] summary::after{
+
+content:"-";
+
+}
+
+.case-study-content{
+
+padding:0 0 17px;
+
+color:var(--muted);
+
+font-size:14px;
+
+line-height:1.7;
+
+}
+
+.case-study-content p{
+
+margin:0 0 10px;
+
+}
+
+.case-study-content p:last-child{
+
+margin-bottom:0;
+
+}
+
+.case-study-content strong{
+
+color:var(--black);
+
+}
+
+.architecture-flow{
+
+display:grid;
+
+grid-template-columns:repeat(5,1fr);
+
+gap:12px;
+
+margin-top:70px;
+
+}
+
+.architecture-step{
+
+position:relative;
+
+min-height:190px;
+
+padding:22px;
+
+background:var(--surface);
+
+border:1px solid var(--border);
+
+border-radius:16px;
+
+transition:.3s ease;
+
+}
+
+.architecture-step:not(:last-child)::after{
+
+content:"";
+
+position:absolute;
+
+top:43px;
+
+right:-17px;
+
+width:22px;
+
+height:1px;
+
+background:var(--border);
+
+z-index:1;
+
+}
+
+.architecture-step[open],
+.architecture-step:hover{
+
+border-color:#111;
+
+transform:translateY(-5px);
+
+}
+
+.architecture-step summary{
+
+display:flex;
+
+flex-direction:column;
+
+align-items:flex-start;
+
+gap:13px;
+
+cursor:pointer;
+
+list-style:none;
+
+color:var(--black);
+
+}
+
+.architecture-step summary::-webkit-details-marker{
+
+display:none;
+
+}
+
+.architecture-step summary i{
+
+font-size:23px;
+
+color:var(--black);
+
+}
+
+.architecture-number{
+
+font-family:"JetBrains Mono",monospace;
+
+font-size:12px;
+
+color:var(--muted);
+
+}
+
+.architecture-step strong{
+
+font-family:"Syne",sans-serif;
+
+font-size:19px;
+
+}
+
+.architecture-step p{
+
+margin-top:19px;
+
+font-size:14px;
+
+line-height:1.7;
+
+color:var(--muted);
+
+}
+
+.architecture-step code{
+
+padding:2px 5px;
+
+background:var(--surface-2);
+
+border-radius:4px;
+
+font-family:"JetBrains Mono",monospace;
+
+font-size:12px;
+
+}
+
+.architecture-note{
+
+display:flex;
+
+align-items:flex-start;
+
+gap:20px;
+
+margin-top:30px;
+
+padding:28px 30px;
+
+background:var(--surface);
+
+border-left:3px solid var(--black);
+
+}
+
+.architecture-note>i{
+
+padding-top:4px;
+
+font-size:24px;
+
+color:var(--black);
+
+}
+
+.architecture-note h3{
+
+margin-bottom:7px;
+
+font-family:"Syne",sans-serif;
+
+font-size:20px;
+
+color:var(--black);
+
+}
+
+.architecture-note p{
+
+color:var(--muted);
+
+line-height:1.7;
+
+}
+
 /* ======================================= */
 
 .project-links{
@@ -1883,32 +2131,6 @@ color:var(--muted);
 line-height:1.8;
 
 margin-bottom:25px;
-
-}
-
-.profile-card::after{
-
-content:"View Profile";
-
-padding:12px 22px;
-
-border:1px solid var(--border);
-
-border-radius:999px;
-
-font-size:13px;
-
-font-weight:600;
-
-transition:.35s;
-
-}
-
-.profile-card:hover::after{
-
-background:#111;
-
-color:#fff;
 
 }
 
@@ -2366,5 +2588,342 @@ background:#111;
 z-index:9999;
 
 transition:width .15s linear;
+
+}
+
+.recruiter-toggle{
+
+display:inline-flex;
+
+align-items:center;
+
+gap:8px;
+
+padding:11px 15px;
+
+border:1px solid var(--border);
+
+border-radius:999px;
+
+color:var(--text);
+
+font-size:13px;
+
+font-weight:700;
+
+transition:.3s ease;
+
+}
+
+.recruiter-toggle:hover{
+
+background:#111;
+
+color:#fff;
+
+transform:translateY(-2px);
+
+}
+
+body.dark-mode .recruiter-toggle:hover{
+
+background:#f5f7f8;
+
+color:#111315;
+
+}
+
+.recruiter-panel{
+
+position:fixed;
+
+inset:0;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+padding:30px;
+
+background:rgba(17,17,17,.55);
+
+opacity:0;
+
+visibility:hidden;
+
+transition:.3s ease;
+
+z-index:1000;
+
+}
+
+.recruiter-panel.show{
+
+opacity:1;
+
+visibility:visible;
+
+}
+
+.recruiter-content{
+
+position:relative;
+
+width:min(680px,100%);
+
+padding:48px;
+
+background:var(--bg);
+
+border:1px solid var(--border);
+
+border-radius:20px;
+
+box-shadow:0 25px 80px rgba(0,0,0,.25);
+
+transform:translateY(18px);
+
+transition:.3s ease;
+
+}
+
+.recruiter-panel.show .recruiter-content{
+
+transform:translateY(0);
+
+}
+
+.recruiter-close{
+
+position:absolute;
+
+top:20px;
+
+right:20px;
+
+width:40px;
+
+height:40px;
+
+border:1px solid var(--border);
+
+border-radius:50%;
+
+color:var(--text);
+
+font-size:18px;
+
+}
+
+.recruiter-content h2{
+
+margin:22px 0 12px;
+
+font-family:"Syne",sans-serif;
+
+font-size:clamp(2rem,5vw,3.3rem);
+
+line-height:1.1;
+
+color:var(--black);
+
+}
+
+.recruiter-summary{
+
+max-width:560px;
+
+color:var(--muted);
+
+font-size:17px;
+
+}
+
+.recruiter-grid{
+
+display:grid;
+
+grid-template-columns:repeat(3,1fr);
+
+gap:18px;
+
+margin:32px 0;
+
+}
+
+.recruiter-grid div{
+
+padding-top:16px;
+
+border-top:1px solid var(--border);
+
+}
+
+.recruiter-grid h3{
+
+margin-bottom:8px;
+
+font-family:"Syne",sans-serif;
+
+font-size:17px;
+
+color:var(--black);
+
+}
+
+.recruiter-grid p{
+
+font-size:14px;
+
+line-height:1.6;
+
+color:var(--muted);
+
+}
+
+.recruiter-actions{
+
+display:flex;
+
+gap:14px;
+
+flex-wrap:wrap;
+
+}
+
+.hero-right .profile-card{
+
+border:none;
+
+}
+
+/* =======================================================
+   DARK THEME
+======================================================= */
+
+body.dark-mode{
+
+--bg:#111315;
+
+--surface:#191c1f;
+
+--surface-2:#22262a;
+
+--black:#f5f7f8;
+
+--text:#d9dde1;
+
+--muted:#9ba3ad;
+
+--border:#343a40;
+
+background:var(--bg);
+
+color:var(--text);
+
+}
+
+body.dark-mode header,
+body.dark-mode footer,
+body.dark-mode .badge,
+body.dark-mode .hero-social a,
+body.dark-mode .about-card,
+body.dark-mode .stack-card,
+body.dark-mode .project-card,
+body.dark-mode .opensource-card,
+body.dark-mode .profiles-grid .profile-card,
+body.dark-mode #contactForm input,
+body.dark-mode #contactForm textarea{
+
+background:var(--surface);
+
+color:var(--text);
+
+border-color:var(--border);
+
+}
+
+body.dark-mode .hero::before{
+
+background-image:
+
+linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),
+
+linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);
+
+}
+
+body.dark-mode .hero::after{
+
+background:radial-gradient(circle,#2a3035 0%,transparent 70%);
+
+}
+
+body.dark-mode .hero h1,
+body.dark-mode .hero h2,
+body.dark-mode .section-heading h2,
+body.dark-mode .about-left h3,
+body.dark-mode .about-card h4,
+body.dark-mode .about-card p,
+body.dark-mode .timeline-item h3,
+body.dark-mode .stack-card h3,
+body.dark-mode .project-header h3,
+body.dark-mode .opensource-card h3,
+body.dark-mode .profiles-grid .profile-card h3,
+body.dark-mode .contact-info h3,
+body.dark-mode .footer-container h2,
+body.dark-mode .stat h3,
+body.dark-mode .logo{
+
+color:var(--black);
+
+}
+
+body.dark-mode .hero h2{
+
+color:#c7cdd3;
+
+}
+
+body.dark-mode .btn-secondary,
+body.dark-mode .project-links a:last-child,
+body.dark-mode .profile-card::after{
+
+color:var(--text);
+
+border-color:var(--border);
+
+}
+
+body.dark-mode .btn-primary,
+body.dark-mode .project-links a:first-child,
+body.dark-mode .coming-soon,
+body.dark-mode #scrollTopBtn{
+
+background:#f5f7f8;
+
+color:#111315;
+
+}
+
+body.dark-mode .stack-card ul li,
+body.dark-mode .project-stack span,
+body.dark-mode .contact-list i,
+body.dark-mode .label,
+body.dark-mode #themeToggle{
+
+background:var(--surface-2);
+
+color:var(--text);
+
+border-color:var(--border);
+
+}
+
+body.dark-mode .progress-bar{
+
+background:#f5f7f8;
 
 }

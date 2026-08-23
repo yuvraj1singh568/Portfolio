@@ -14,7 +14,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const scrollTopBtn = document.getElementById("scrollTopBtn");
     const navLinks = document.querySelectorAll(".nav-links a");
     const sections = document.querySelectorAll("section");
-    const themeBtn = document.getElementById("themeToggle");
+    const themeBtns = document.querySelectorAll("#themeToggle");
+    const recruiterBtns = document.querySelectorAll(".recruiter-toggle");
+    const recruiterPanel = document.getElementById("recruiterMode");
+    const recruiterClose = document.querySelector(".recruiter-close");
 
     /* ======================================
        STICKY NAVBAR
@@ -150,21 +153,89 @@ document.addEventListener("DOMContentLoaded", () => {
        THEME TOGGLE
     ====================================== */
 
-    themeBtn.addEventListener("click", () => {
+    function updateThemeButtons() {
 
-        document.body.classList.toggle("dark-mode");
+        const isDark = document.body.classList.contains("dark-mode");
 
-        if (
-            document.body.classList.contains("dark-mode")
-        ) {
+        themeBtns.forEach(button => {
 
-            themeBtn.innerHTML =
-                '<i class="fa-solid fa-sun"></i>';
+            button.innerHTML = isDark
+                ? '<i class="fa-solid fa-sun"></i>'
+                : '<i class="fa-solid fa-moon"></i>';
 
-        } else {
+            button.setAttribute(
+                "aria-label",
+                isDark ? "Switch to light theme" : "Switch to dark theme"
+            );
 
-            themeBtn.innerHTML =
-                '<i class="fa-solid fa-moon"></i>';
+        });
+
+    }
+
+    if (localStorage.getItem("theme") === "dark") {
+
+        document.body.classList.add("dark-mode");
+
+    }
+
+    updateThemeButtons();
+
+    themeBtns.forEach(button => {
+
+        button.addEventListener("click", () => {
+
+            document.body.classList.toggle("dark-mode");
+
+            localStorage.setItem(
+                "theme",
+                document.body.classList.contains("dark-mode") ? "dark" : "light"
+            );
+
+            updateThemeButtons();
+
+        });
+
+    });
+
+    function closeRecruiterMode() {
+
+        recruiterPanel.classList.remove("show");
+        recruiterPanel.setAttribute("aria-hidden", "true");
+
+    }
+
+    recruiterBtns.forEach(button => {
+
+        button.addEventListener("click", () => {
+
+            recruiterPanel.classList.add("show");
+            recruiterPanel.setAttribute("aria-hidden", "false");
+
+        });
+
+    });
+
+    recruiterClose.addEventListener("click", () => {
+
+        closeRecruiterMode();
+
+    });
+
+    recruiterPanel.addEventListener("click", event => {
+
+        if (event.target === recruiterPanel) {
+
+            closeRecruiterMode();
+
+        }
+
+    });
+
+    document.addEventListener("keydown", event => {
+
+        if (event.key === "Escape" && recruiterPanel.classList.contains("show")) {
+
+            closeRecruiterMode();
 
         }
 

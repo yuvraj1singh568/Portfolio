@@ -391,6 +391,40 @@ flex-direction:column;
 
 }
 
+.recruiter-content{
+
+padding:36px 22px;
+
+}
+
+.recruiter-toggle span{
+
+display:none;
+
+}
+
+.recruiter-grid{
+
+grid-template-columns:1fr;
+
+gap:14px;
+
+margin:24px 0;
+
+}
+
+.architecture-flow{
+
+grid-template-columns:repeat(2,1fr);
+
+}
+
+.architecture-step:not(:last-child)::after{
+
+display:none;
+
+}
+
 /* ===========================
 Open Source
 =========================== */
@@ -506,6 +540,12 @@ font-size:2rem;
 width:240px;
 
 height:240px;
+
+}
+
+.architecture-flow{
+
+grid-template-columns:1fr;
 
 }
 
