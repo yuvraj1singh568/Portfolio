@@ -371,6 +371,8 @@ Projects
 
 border-radius:18px;
 
+padding:24px;
+
 }
 
 .project-content{
@@ -490,6 +492,12 @@ Footer
 .footer-container h2{
 
 font-size:30px;
+
+}
+
+.footer-art{
+
+height:clamp(250px,58vw,420px);
 
 }
 
